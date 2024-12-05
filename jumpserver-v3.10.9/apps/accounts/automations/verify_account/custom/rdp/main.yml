@@ -1,0 +1,16 @@
+- hosts: custom
+  gather_facts: no
+  vars:
+    ansible_shell_type: sh
+    ansible_connection: local
+    ansible_python_interpreter: /opt/py3/bin/python
+
+  tasks:
+    - name: Verify account (pyfreerdp)
+      rdp_ping:
+        login_host: "{{ jms_asset.address }}"
+        login_port: "{{ jms_asset.port }}"
+        login_user: "{{ account.username }}"
+        login_password: "{{ account.secret }}"
+        login_secret_type: "{{ account.secret_type }}"
+        login_private_key_path: "{{ account.private_key_path }}"

@@ -1,0 +1,10 @@
+.git
+data/*
+.github
+tmp/*
+django.db
+celerybeat.pid
+### Vagrant ###
+.vagrant/
+apps/xpack/.git
+.history/

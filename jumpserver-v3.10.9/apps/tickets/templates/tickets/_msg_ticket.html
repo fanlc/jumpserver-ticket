@@ -1,0 +1,31 @@
+{% load i18n %}
+<div class="ticket-container">
+    <h1 class="title">
+        {{ title | safe }}
+    </h1>
+    <div>
+        {% for child in content %}
+            <div class="card">
+                <h2 class="child_title">{{ child.title }}</h2>
+                {% for item in child.content %}
+                    <p class="field-group">
+                        <span class="field-name"><strong>{{ item.title }}:</strong></span>
+                        <span class="field-value">{{ item.value }}</span>
+                    </p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="action_group">
+        <a class="view-link" href="{{ ticket_detail_url }}" target="_blank" rel="noopener">
+            {% trans 'View details' %}
+        </a>
+        <br>
+        {% if ticket_approval_url %}
+            <a href="{{ ticket_approval_url }}" target="_blank" rel="noopener">
+                {% trans 'Direct approval' %}
+            </a>
+        {% endif %}
+    </div>
+    <br>
+</div>

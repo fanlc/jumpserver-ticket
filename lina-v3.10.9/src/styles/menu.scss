@@ -1,0 +1,140 @@
+@import "./variables";
+
+.left-menu.el-menu {
+  .el-menu--inline {
+    background-color: $subMenuBg;
+  }
+
+  .el-menu-item, .el-submenu {
+    font-weight: 600;
+  }
+
+  .el-submenu-sidebar.el-submenu.is-opened {
+    //box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+
+    //* {
+    //  background-color: #f6f6f6 !important;
+    //}
+
+    border-top: solid 1px #f3f3f4;
+    //border-bottom: solid 1px #f3f3f4;
+  }
+
+  .el-submenu, .el-menu-item.submenu-title-noDropdown {
+    background-color: $menuBg;
+    border-top: solid 1px $menuBg;
+
+    .el-submenu__title {
+      color: $menuText;
+      font-weight: 400;
+
+      &:hover {
+        color: $menuActiveText;
+        background-color: $menuHover;
+      }
+
+      i {
+        color: $menuActiveText;
+      }
+    }
+  }
+
+  .el-menu-item, .el-submenu-sidebar .el-menu-item {
+    background-color: $subMenuBg;
+    color: $menuText;
+    list-style: circle inside;
+
+    &.submenu-title-noDropdown {
+      list-style: none;
+    }
+
+    &.is-active {
+      color: $subMenuActiveText;
+      font-weight: 400;
+      list-style-type: disc;
+    }
+
+    &:hover {
+      background-color: $subMenuHover !important;
+      color: $subMenuActiveText;
+      list-style-type: disc;
+    }
+
+    i {
+      //color: $menuText;
+    }
+  }
+
+  i.fa {
+    margin-right: 10px;
+    width: 13px;
+  }
+
+  .is-active i.fa {
+    color: $menuActiveText;
+  }
+
+  .el-submenu .el-menu-item {
+    height: 38px;
+    line-height: 38px;
+    padding: 0 52px;
+    min-width: 200px;
+  }
+
+  .nest-menu .el-submenu__title {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 52px;
+    min-width: 200px;
+  }
+
+  .nest-menu li.is-opened, .nest-menu li.is-active {
+    border-left: none;
+  }
+
+  .el-menu-item, .el-submenu__title {
+    height: 48px;
+    line-height: 48px;
+    font-weight: 400;
+    font-size: 13px;
+  }
+
+  .el-menu-item:hover, .el-menu-item:focus {
+    color: $subMenuActiveText;
+  }
+
+  .navbar li.is-active, .navbar li.is-opened {
+    border: none;
+  }
+
+  .nest-menu li.is-active {
+    border: none;
+  }
+
+  li.is-opened, li.is-active {
+    //* {
+    //  background-color: var(--menu-hover) !important;
+    //}
+
+    border-left: 4px solid var(--menu-text-active);
+  }
+
+  .el-submenu-sidebar .el-menu-item {
+    background-color: $subMenuBg;
+  }
+
+  .el-submenu.is-opened {
+    background-color: $subMenuBg;
+
+    .el-submenu__title {
+    }
+
+    & .nest-menu {
+      background-color: $subMenuBg;
+    }
+  }
+
+  .nest-menu:last-child {
+    padding-bottom: 10px;
+  }
+}
