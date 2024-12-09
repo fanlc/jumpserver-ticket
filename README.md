@@ -70,7 +70,7 @@ path('mytickets/createauthmysql/', api.mytickets.create_auth_mysqls),
 
 #### 安装教程
 
-安装的话 就按照官网的安装就行\
+安装的话 就按照官网的安装就行
 
 大概步骤的话：
 
@@ -143,3 +143,5 @@ GRANT SELECT, GRANT OPTION, RELOAD, UPDATE, CREATE USER, SHOW DATABASES ON *.* T
 一起进步，一起成长！
 ```
 
+我的博客园
+https://www.cnblogs.com/fanfanfanlichun/p/18595368
