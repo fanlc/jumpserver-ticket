@@ -11,7 +11,7 @@ user_permission_urlpatterns = [
          name='user-all-assets'),
 
 
-    # 自己新增的
+    # 自己新增的 工单申请
     path('mytickets/getassets/', api.mytickets.get_all_node),
     path('mytickets/apply/', api.perm_apply.perm_application),
     path('mytickets/applydb/', api.perm_apply.perm_application_db),
