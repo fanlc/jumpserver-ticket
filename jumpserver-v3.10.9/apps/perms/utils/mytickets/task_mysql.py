@@ -241,7 +241,7 @@ def authorize_user(account_template_name, template_asset):
                     # 循环3次 给用户授权 每次循环1秒
                     for i in range(3):
                         sleep(1)
-                        grant_sql = f"GRANT SELECT ON {dbname}.* TO {account_template_name}@'%';"
+                        grant_sql = f"GRANT SELECT ON {dbname}.* TO '{account_template_name}'@'%';"
 
                         cursor.execute(grant_sql)
 
