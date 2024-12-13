@@ -190,8 +190,12 @@ def myapproval(file_name_str):
             # 循环机器列表 拿到机器id
 
             assets_ip_list = []
+            all_assets_readonly = []
             # 获取ip列表
             for assetsmes in loaded_data['allasset']:
+                if assetsmes['readonly']:
+                    all_assets_readonly.append(assetsmes['address'])
+
                 assets_ip_list.append(assetsmes['address'])
 
             '''
@@ -231,7 +235,7 @@ def myapproval(file_name_str):
             # 去操作数据库 给用户授权
             # 先静默2秒 等待用户自动推送
             sleep(5)
-            res = authorize_user(account_template_name, template_asset)
+            res = authorize_user(account_template_name, template_asset, all_assets_readonly)
 
             if res:
                 context = {
@@ -431,4 +435,19 @@ def get_mysql_alldb(nodeip, uname):
 
     # 最终返回的数据
     return res
+
+
+def judge_readonly(all_lables_qs):
+    '''
+    all_lables_qs = <QuerySet [<Label: mysql:prod>, <Label: mysql:readonly>]>
+    获取mysql资产的标签
+    并且从标签判断这个mysql资产是否为只读数据库
+    '''
+    if all_lables_qs:
+        for lable_mes in all_lables_qs:
+            if lable_mes.name == "mysql" and lable_mes.value == "readonly":
+                return True
+
+
+    return False
 

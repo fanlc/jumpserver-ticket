@@ -7,7 +7,7 @@ from django.db.models import Q
 from users.models.user import User
 from accounts.models.template import AccountTemplate
 
-from perms.utils.mytickets.data_format import myapp_dataformat, myapproval, get_mysql_alldb
+from perms.utils.mytickets.data_format import myapp_dataformat, myapproval, get_mysql_alldb, judge_readonly
 
 import os,json
 from time import sleep
@@ -60,6 +60,7 @@ def get_all_node(request):
             assets_all_q['address'] = assets_mes.address
             assets_all_q['platform'] = assets_mes.platform.name
             assets_all_q['created_by'] = assets_mes.created_by
+            assets_all_q['readonly'] = judge_readonly(assets_mes.get_labels())
             assets_all_q['alldb'] = get_mysql_alldb(assets_mes.address, get_params['uname'])
             assets_all_q['xz'] = []
             assets_all_list.append(assets_all_q)
@@ -432,8 +433,12 @@ def create_auth_mysqls(request):
         # 然后给机器 绑定模版账号
         # 循环机器列表 拿到机器id
         assets_ip_list = []
+        all_assets_readonly = []
         for assetsmes in json_obj['assets']:
-            assets_ip_list.append(assetsmes["address"])
+            if assetsmes['readonly']:
+                all_assets_readonly.append(assetsmes['address'])
+
+            assets_ip_list.append(assetsmes['address'])
 
         '''
         [(UUID('1f86e5e6-d0d9-4cc1-b45d-edcef5ea53db'), '10.8.100.102'),
@@ -480,7 +485,7 @@ def create_auth_mysqls(request):
         # 去操作数据库 给用户授权
         # 先静默2秒 等待用户自动推送
         sleep(5)
-        res = authorize_user(account_template_name, template_asset)
+        res = authorize_user(account_template_name, template_asset, all_assets_readonly)
 
         if res:
             context = {

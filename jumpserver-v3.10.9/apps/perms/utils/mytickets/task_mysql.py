@@ -135,7 +135,7 @@ def bind_asset(account_template_id, account_template_name, assets_id_list):
     return template_asset
 
 
-def authorize_user(account_template_name, template_asset):
+def authorize_user(account_template_name, template_asset, all_assets_readonly):
     '''
     1, 查看用户是否创建
     2, 授权表给用户
@@ -157,6 +157,9 @@ def authorize_user(account_template_name, template_asset):
 
     # 连接数据库
     for mes_list in template_asset:
+        if mes_list[2] in all_assets_readonly:
+            # 如果ip在只读列表 那么就跳出本次循环
+            continue
         try:
             # prod
             db_user = "jumpserver_r"
@@ -250,6 +253,7 @@ def authorize_user(account_template_name, template_asset):
 
 
         except Exception as e:
+            print(e)
             return "error"
 
         finally:

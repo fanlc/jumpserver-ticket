@@ -38,10 +38,16 @@
         {{ multipleSelection }}
       </div> -->
       <div slot="footer" class="dialog-footer">
+        <el-tooltip
+          class="box-item"
+          effect="dark"
+          content="如果申请的是只读库，主库也需要申请上！"
+          placement="top-end"
+        >
+          <el-button v-if="multipleSelection.length > 0" type="primary" @click="permissionSelect">提交</el-button>
+          <el-button v-else type="primary" disabled>提交</el-button>
+        </el-tooltip>
 
-        <el-button v-if="multipleSelection.length > 0" type="primary" @click="permissionSelect">提交</el-button>
-        <!-- <el-button type="primary" @click="permissionOrdinary">普通权限</el-button> -->
-        <el-button v-else type="primary" disabled>提交</el-button>
       </div>
     </el-dialog>
 

@@ -36,7 +36,8 @@ def perm_application_db(request):
             'name': '测试mysql4', 
             'address': '10.8.100.102', 
             'platform': 'MySQL', 
-            'created_by': 'Administrator', 
+            'created_by': 'Administrator',
+            'readonly': 'true',
             'alldb': [{'value': 'jumpserver', 'label': 'jumpserver'}, {'value': 'test1', 'label': 'test1'}, {'value': 'test2', 'label': 'test2'}, {'value': 'test3', 'label': 'test3'}, {'value': 'test4', 'label': 'test4'}], 
             'xz': ['jumpserver']
         },
@@ -46,6 +47,7 @@ def perm_application_db(request):
             'address': '10.8.100.103', 
             'platform': 'MySQL', 
             'created_by': 'Administrator', 
+            'readonly': 'true',
             'alldb': [{'value': 'jumpserver', 'label': 'jumpserver'}, {'value': 'test1', 'label': 'test1'}, {'value': 'test2', 'label': 'test2'}, {'value': 'test3', 'label': 'test3'}, {'value': 'test4', 'label': 'test4'}], 
             'xz': ['jumpserver']
         },
@@ -55,6 +57,7 @@ def perm_application_db(request):
             'address': '10.8.100.104', 
             'platform': 'MySQL', 
             'created_by': 'Administrator', 
+            'readonly': 'true',
             'alldb': [{'value': 'jumpserver', 'label': 'jumpserver'}, {'value': 'test1', 'label': 'test1'}, {'value': 'test2', 'label': 'test2'}, {'value': 'test3', 'label': 'test3'}, {'value': 'test4', 'label': 'test4'}], 
             'xz': ['jumpserver']
         }
