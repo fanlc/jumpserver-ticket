@@ -144,6 +144,7 @@ def myapproval(file_name_str):
         with open(file_name_path, 'r') as file:
             loaded_data = json.load(file)
 
+        # 这里是判断 审批的是node工单还是mysql工单
         if "platform" in loaded_data:
             # 首先检查用户是否存在 jumpserver数据库，没有的话 就先去登陆一下
             user_obj_ = User.objects.filter(username=loaded_data['uname'])
@@ -157,7 +158,7 @@ def myapproval(file_name_str):
             
             '''
             首先：创建一个模版账号。账号固定格式 jump_db_fanlichun_r。
-            密码：自动生成
+            密码: 手动指定，全部都是: ahZqD!4eVz9HRP^&
             勾选自动推送账号到数据库
             '''
 
@@ -220,9 +221,9 @@ def myapproval(file_name_str):
 
             # 先整理数据
             '''
-            [['dadas', '2.2.2.2', ['db1', 'db3']],
-                ['dadas', '1.1.1.1', ['db1', 'db2', 'db3']],
-                ['dadas', '10.8.100.54', ['db2', 'db3']]]
+            [['mysql1', '2.2.2.2', ['db1', 'db3']],
+                ['mysql2', '1.1.1.1', ['db1', 'db2', 'db3']],
+                ['mysql3', '10.8.100.54', ['db2', 'db3']]]
             '''
             for uassets in loaded_data['allasset']:
                 for ta in template_asset:
@@ -233,8 +234,9 @@ def myapproval(file_name_str):
             ### [['12669cf1-581d-4865-af78-bb68ba16d985', '26954cde-0cda-4da2-b773-a9819ef81599', '10.8.100.102', ['test1', 'test2']]]
 
             # 去操作数据库 给用户授权
-            # 先静默2秒 等待用户自动推送
-            sleep(5)
+
+            # sleep(5)
+            # 现在不用等待5秒了，不用等待让jumpserver推送用户了，现在是直接去数据库 新建的用户
             res = authorize_user(account_template_name, template_asset, all_assets_readonly)
 
             if res:
@@ -327,6 +329,10 @@ def get_mysql_alldb(nodeip, uname):
     '''
     res = []
 
+    # 拼接授权的数据库用户名称
+    # 这样去数据库查询用户是否 存在 才能查出来
+    overall_name = 'jump_db_{}_r'.format(uname)
+
     # 连接到MySQL服务器
     # prod
     db_user = "jumpserver_r"
@@ -363,7 +369,7 @@ def get_mysql_alldb(nodeip, uname):
 
             # 查询这个用户是否在数据库有账号
             selectsql = "SELECT 1 FROM mysql.user WHERE user = %s LIMIT 1"
-            cursor.execute(selectsql, (uname,))
+            cursor.execute(selectsql, (overall_name,))
 
             # 获取结果
             result = cursor.fetchone()
@@ -375,7 +381,7 @@ def get_mysql_alldb(nodeip, uname):
                 # print(f"用户 {uname} 存在于MySQL中。")
                 # 获取已经的授权
                 authsql = "SELECT DISTINCT `Db` FROM `db` JOIN `user` ON `db`.`Host` = `user`.`Host` AND `db`.`User` = `user`.`User` WHERE `user`.`User` = %s"
-                cursor.execute(authsql, (uname,))
+                cursor.execute(authsql, (overall_name,))
 
                 # 已经授权的库的 元祖
                 authorized_dbs = cursor.fetchall()

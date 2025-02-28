@@ -39,6 +39,7 @@ def mes_format(params, body):
     else:
         accounts_list = [
             "@SPEC",
+            "@INPUT",
             "app"
         ]
         name_fmat = "%s-regularusers" % params['uname']

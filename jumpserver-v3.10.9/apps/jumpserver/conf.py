@@ -236,8 +236,8 @@ class Config(dict):
         'SESSION_EXPIRE_AT_BROWSER_CLOSE': False,
         'LOGIN_URL': reverse_lazy('authentication:login'),
 
-        'CONNECTION_TOKEN_ONETIME_EXPIRATION': 5 * 60,  # 默认(new)
-        'CONNECTION_TOKEN_EXPIRATION': 5 * 60,  # 默认(old)
+        'CONNECTION_TOKEN_ONETIME_EXPIRATION': 30 * 60,  # 默认(new)
+        'CONNECTION_TOKEN_EXPIRATION': 30 * 60,  # 默认(old)
 
         'CONNECTION_TOKEN_REUSABLE_EXPIRATION': 60 * 60 * 24 * 30,  # 最大(new)
         'CONNECTION_TOKEN_EXPIRATION_MAX': 60 * 60 * 24 * 30,  # 最大(old)

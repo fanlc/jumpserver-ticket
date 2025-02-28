@@ -13,9 +13,13 @@ user_permission_urlpatterns = [
 
     # 自己新增的 工单申请
     path('mytickets/getassets/', api.mytickets.get_all_node),
+    # 创建授权node
     path('mytickets/apply/', api.perm_apply.perm_application),
+    # 创建授权mysql
     path('mytickets/applydb/', api.perm_apply.perm_application_db),
+    # 我的申请
     path('mytickets/myapplication/', api.mytickets.my_application),
+    # 我的审批
     path('mytickets/myapproval/', api.mytickets.my_myapproval),
 
     # 对接工单系统
