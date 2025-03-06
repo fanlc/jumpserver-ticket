@@ -2,6 +2,7 @@ from django.http import JsonResponse
 import json
 import time
 from perms.utils.perm_application_tools import create_authorization
+from perms.utils.data_serialize import serialize_perm
 
 
 def perm_application(request):
@@ -125,4 +126,68 @@ def perm_application_db(request):
                 'mes': e
             }
             return JsonResponse(res, safe=False)
+
+
+def perm_application_md(request):
+    '''
+    创建授权
+    Redis
+
+    {'pname': '范立春', 'uname': 'fanlichun', 'nameid': 'eb0a174e-25d4-445a-9d9a-f4db58f8f5a7'}
+    [
+        {
+            'id': 'f70c2509-8450-40c8-bf6a-66ea813a04d3',
+            'name': 'redis',
+            'address': '10.8.100.102',
+            'platform': 'Redis6+',
+            'created_by': '范立春'
+        }
+    ]
+    '''
+
+    if request.method == 'POST':
+        # 参数
+        get_params = request.GET.dict()
+        json_b = request.body
+        json_str = json_b.decode('utf-8')
+        # body
+        json_obj = json.loads(json_str)
+        
+
+        # 先组合信息
+        assets_list = []
+
+        for assets_mes in json_obj:
+            assets_list.append(assets_mes['id'])
+
+        overall_name = 'jump_md_{}_r'.format(get_params['uname'])
+        comment_name = f"{get_params['pname']}-redis超级用户"
+
+
+        req_payload_dict = {
+            "assets": assets_list,
+            "nodes": [],
+            "accounts": ["@ALL"],
+            "protocols": ["all"],
+            "actions": [
+                "connect",
+                "upload",
+                "download",
+                "copy",
+                "paste",
+                "delete",
+                "share"
+            ],
+            "is_active": "true",
+            "name": overall_name,
+            "users": [
+                get_params['nameid']
+            ],
+            "comment": comment_name,
+            "platform": "redis"
+        }
+
+        res = serialize_perm(req_payload_dict)
+
+        return JsonResponse(res, safe=False)
 

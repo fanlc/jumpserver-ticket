@@ -29,11 +29,14 @@ def myapp_dataformat(all_my_application_filename, page, limit):
             with open(file_name_path, 'r') as file:
                 loaded_data = json.load(file)
             
-            # 判断是mysql文件还是node文件
-            if "platform" in loaded_data:
+            # print(loaded_data)
+            # 判断是mysql文件还是node文件,就是文件的类型
+            if loaded_data["platform"] == "MySQL":
                 # mysql
                 res.append(loaded_data)
+                # print(loaded_data)
             else:
+                # print(loaded_data)
                 assets_id_list = loaded_data['assets']
                 assets_ip_list = []
                 for assets_id in assets_id_list:
@@ -42,7 +45,8 @@ def myapp_dataformat(all_my_application_filename, page, limit):
                     assets_ip_list.append(assets_mes)
                 assets_ip_str = ','.join(assets_ip_list)
                 loaded_data['assets'] = assets_ip_str
-                del loaded_data['accounts'][0]
+                if len(loaded_data['accounts']) != 1:
+                    del loaded_data['accounts'][0]
                 accounts_str = ' '.join(loaded_data['accounts'])
                 loaded_data['accounts'] = accounts_str
                 res.append(loaded_data)
@@ -145,7 +149,7 @@ def myapproval(file_name_str):
             loaded_data = json.load(file)
 
         # 这里是判断 审批的是node工单还是mysql工单
-        if "platform" in loaded_data:
+        if loaded_data["platform"] == "MySQL":
             # 首先检查用户是否存在 jumpserver数据库，没有的话 就先去登陆一下
             user_obj_ = User.objects.filter(username=loaded_data['uname'])
             if not user_obj_:
@@ -297,6 +301,11 @@ def myapproval(file_name_str):
 
         else:
             init_loaded_data = copy.deepcopy(loaded_data)
+
+            # 先删除一些不用打 参数
+            if "platform" in loaded_data:
+                del loaded_data['platform']
+
             old_auth_dict = obtain_auth(loaded_data)
             if old_auth_dict:
                 new_data_result = merge_data(old_auth_dict, loaded_data)

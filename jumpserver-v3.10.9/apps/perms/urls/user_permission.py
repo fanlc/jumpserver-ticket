@@ -17,6 +17,8 @@ user_permission_urlpatterns = [
     path('mytickets/apply/', api.perm_apply.perm_application),
     # 创建授权mysql
     path('mytickets/applydb/', api.perm_apply.perm_application_db),
+    # 创建授权redis
+    path('mytickets/applymd/', api.perm_apply.perm_application_md),
     # 我的申请
     path('mytickets/myapplication/', api.mytickets.my_application),
     # 我的审批

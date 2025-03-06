@@ -25,12 +25,18 @@ def get_all_node(request):
         if get_params['assettype'] == "node":
             assets_object = Asset.objects.filter(Q(platform__name="Linux") | Q(platform__name="Windows") | Q(platform__name="Windows2016"), address=get_params['ip']).order_by('address')
             obj_count = len(assets_object)
+        elif get_params['assettype'] == "redis":
+            assets_object = Asset.objects.filter(Q(platform__name="Redis") | Q(platform__name="Redis6+"), address=get_params['ip']).order_by('address')
+            obj_count = len(assets_object)
         else:
             assets_object = Asset.objects.filter(platform__name="MySQL", address=get_params['ip']).order_by('address')
             obj_count = len(assets_object)
     else:
         if get_params['assettype'] == "node":
             assets_object = Asset.objects.filter(Q(platform__name="Linux") | Q(platform__name="Windows") | Q(platform__name="Windows2016")).order_by('address')
+            obj_count = len(assets_object)
+        elif get_params['assettype'] == "redis":
+            assets_object = Asset.objects.filter(Q(platform__name="Redis") | Q(platform__name="Redis6+")).order_by('address')
             obj_count = len(assets_object)
         else:
             assets_object = Asset.objects.filter(platform__name="MySQL").order_by('address')
@@ -42,6 +48,15 @@ def get_all_node(request):
     assets_all_list = []
 
     if get_params['assettype'] == "node":
+        for assets_mes in page_obj:
+            assets_all_q = {}
+            assets_all_q['id'] = assets_mes.id
+            assets_all_q['name'] = assets_mes.name
+            assets_all_q['address'] = assets_mes.address
+            assets_all_q['platform'] = assets_mes.platform.name
+            assets_all_q['created_by'] = assets_mes.created_by
+            assets_all_list.append(assets_all_q)
+    elif get_params['assettype'] == "redis":
         for assets_mes in page_obj:
             assets_all_q = {}
             assets_all_q['id'] = assets_mes.id
@@ -117,10 +132,10 @@ def my_application(request):
     if is_user:
         for filename in file_names:
             filename_q = filename.split('-', 1)[0]
-            mysql_filename = filename.split('.', 1)[0]
+            md_filename = filename.split('.', 1)[0]
             if filename_q == is_user:
                 all_my_application_filename.append(filename)
-            elif mysql_filename == f"jump_db_{is_user}_r":
+            elif md_filename == f"jump_db_{is_user}_r" or md_filename == f"jump_md_{is_user}_r":
                 all_my_application_filename.append(filename)
             else:
                 pass

@@ -64,7 +64,8 @@ def mes_format(params, body):
         "users": [
             params['nameid']
         ],
-        "comment": comment_fmat
+        "comment": comment_fmat,
+        "platform": "Node"
     }
 
     # print(req_payload_dict)
