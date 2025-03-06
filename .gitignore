@@ -65,3 +65,5 @@ tests/**/coverage/
 *.sln
 .env.development
 .python-version
+
+mycore-ce-v3-16.tar.gz

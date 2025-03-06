@@ -74,6 +74,12 @@ export default {
           meta: { title: '权限申请-mysql', permissions: [] }
         },
         {
+          path: 'Auth-Application-redis',
+          name: 'AuthApplicationMysql',
+          component: () => import('@/views/myticket/AuthApplicationRedis'),
+          meta: { title: '权限申请-redis', permissions: [] }
+        },
+        {
           path: 'My-Application',
           name: 'MyApplication',
           component: () => import('@/views/myticket/MyApplication'),

@@ -17,3 +17,12 @@ export function permAppDb(query, data) {
     data: data
   })
 }
+
+export function permMd(query, data) {
+  return request({
+    url: '/api/v1/perms/users/mytickets/applymd/',
+    method: 'post',
+    params: query,
+    data: data
+  })
+}

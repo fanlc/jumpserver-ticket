@@ -2,8 +2,8 @@
 
 #### 介绍
 是在jumpserver(v3.10.9)上面二次开发出了一个简单的工单申请\
-可以申请服务器权限
-可以申请mysql权限
+可以申请服务器权限\
+可以申请mysql权限\
 可以申请redis权限
 
 自动创建授权，不用人为干预
@@ -28,6 +28,10 @@ jumpserver lina代码
 
 ![1](readme-img/4.png)
 
+![1](readme-img/5.png)
+
+![1](readme-img/6.png)
+
 
 #### 代码接口介绍
 ```shell
@@ -48,6 +52,9 @@ path('mytickets/apply/', api.perm_apply.perm_application),
 
 # 这个是创建申请mysql数据库权限的接口
 path('mytickets/applydb/', api.perm_apply.perm_application_db),
+
+# 创建授权redis
+path('mytickets/applymd/', api.perm_apply.perm_application_md),
 
 # 这个是查看自己的工单申请接口
 path('mytickets/myapplication/', api.mytickets.my_application),
@@ -144,5 +151,14 @@ GRANT SELECT, GRANT OPTION, RELOAD, UPDATE, CREATE USER, SHOW DATABASES ON *.* T
 一起进步，一起成长！
 ```
 
-我的博客园
+我的博客园\
 https://www.cnblogs.com/fanfanfanlichun/p/18595368
+
+我的另一个开源工具：\
+微信公众号，自动化新建文章，自动发布。新建小绿书
+https://gitee.com/ccsang/wxmp
+
+
+我的瞎玩微信公众号\
+欢迎交流技术\
+![1](readme-img/qrcode.jpg)
